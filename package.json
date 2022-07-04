@@ -1,6 +1,7 @@
 {
   "name": "incipio",
   "private": true,
+  "homepage": "https://lagostra.github.io/incipio",
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
