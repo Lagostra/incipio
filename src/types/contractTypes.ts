@@ -4,6 +4,7 @@ export interface IRepositoryDto {
   owner: IOwnerDto;
   html_url: string;
   private: boolean;
+  archived: boolean;
 }
 
 export interface IOwnerDto {

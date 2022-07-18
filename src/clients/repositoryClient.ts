@@ -13,7 +13,7 @@ export const getUserRepositories = async (): Promise<IRepository[]> => {
     response = (await get(
       `${GITHUB_URL}/user/repos?per_page=${PAGE_SIZE}&page=${page++}`
     )) as IRepositoryDto[];
-    result.push(...response.map(mapRepository));
+    result.push(...response.filter((r) => !r.archived).map(mapRepository));
   } while (response.length === PAGE_SIZE);
   return result;
 };
