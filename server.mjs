@@ -1,15 +1,18 @@
 import express from "express";
 import fetch from "node-fetch";
+import crypto from "crypto";
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 
 const config = {
-  redirectUri: process.env.REDIRECT_URI || "http://localhost:3000/callback",
+  redirectUri:
+    process.env.REDIRECT_URI || "http://localhost:3000/auth/callback",
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  scope: process.env.SCOPE || "",
+  scope: process.env.SCOPE || "user repo",
+  port: process.env.PORT || 3001,
 };
 
 const validStates = [];
@@ -32,11 +35,15 @@ app.use(
 );
 
 app.use("/oauth/authorize", (req, res) => {
-  const state = Crypto.getRandomValues(new Uint8Array(16)).toString();
+  const state = crypto.randomBytes(48).toString("hex");
   validStates.push(state);
-  res.redirect(
-    `https://github.com/login/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&scope=${config.scope}&state=${state}`
-  );
+  const url = `https://github.com/login/oauth/authorize?client_id=${
+    config.clientId
+  }&redirect_uri=${encodeURIComponent(
+    config.redirectUri
+  )}&scope=${encodeURIComponent(config.scope)}&state=${state}`;
+  console.log(url, config);
+  res.redirect(url);
 });
 
 app.use("/oauth/access_token", async (req, res) => {
@@ -59,4 +66,8 @@ app.use("/oauth/access_token", async (req, res) => {
 
   const content = await response.json();
   res.send({ accessToken: content.access_token });
+});
+
+app.listen(config.port, () => {
+  console.log(`Server running on port ${config.port}`);
 });
