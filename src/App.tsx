@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { RepositoryList } from "./components/RepositoryList";
+import { RouteList } from "./components/RouteList";
 
 export const App = () => {
   const wrapperStyle = css`
@@ -14,9 +16,9 @@ export const App = () => {
   return (
     <main css={wrapperStyle}>
       <div css={contentStyle}>
-        <h1>Hello World!</h1>
-
-        <RepositoryList />
+        <Router>
+          <RouteList />
+        </Router>
       </div>
     </main>
   );
