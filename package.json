@@ -4,13 +4,18 @@
   "homepage": "https://lagostra.github.io/incipio",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
+    "start": "concurrently 'npm:server' 'npm:frontend'",
+    "server": "node server.mjs",
+    "frontend": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
     "build:prod": "tsc && vite build --base=/incipio",
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
@@ -18,6 +23,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^1.3.0",
+    "concurrently": "^7.2.2",
     "typescript": "^4.6.3",
     "vite": "^2.9.9"
   }
