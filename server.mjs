@@ -81,7 +81,7 @@ app.get("*", (request, response) => {
   );
   response.header("Expires", "-1");
   response.header("Pragma", "no-cache");
-  response.sendFile(path.join(__dirname, "build/index.html"));
+  response.sendFile(path.join(__dirname, "dist/index.html"));
 });
 
 app.listen(config.port, () => {
