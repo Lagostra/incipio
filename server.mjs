@@ -68,6 +68,16 @@ app.use("/oauth/access_token", async (req, res) => {
   res.send({ accessToken: content.access_token });
 });
 
+app.get("*", (request, response) => {
+  response.header(
+    "Cache-Control",
+    "private, no-cache, no-store, must-revalidate"
+  );
+  response.header("Expires", "-1");
+  response.header("Pragma", "no-cache");
+  response.sendFile(path.join(__dirname, "build/index.html"));
+});
+
 app.listen(config.port, () => {
   console.log(`Server running on port ${config.port}`);
 });
