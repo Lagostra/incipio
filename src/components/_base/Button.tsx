@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 
+type ButtonType = "primary" | "secondary";
 interface IProps {
-  type: "primary" | undefined;
+  buttonType: ButtonType | undefined;
 }
 export const Button = styled.button<IProps>`
   padding: 10px 8px;
@@ -11,7 +12,7 @@ export const Button = styled.button<IProps>`
   font-size: 16px;
   font-weight: bold;
   background: ${(props: IProps) => {
-    switch (props.type) {
+    switch (props.buttonType) {
       case "primary":
         return "#00aaff";
       default:
@@ -19,7 +20,7 @@ export const Button = styled.button<IProps>`
     }
   }};
   color: ${(props: IProps) => {
-    switch (props.type) {
+    switch (props.buttonType) {
       case "primary":
         return "#fff";
       default:

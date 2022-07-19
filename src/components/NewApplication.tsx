@@ -73,7 +73,7 @@ export const NewApplication = () => {
       <Label>Version prefix</Label>
       <Input type="text" />
 
-      <Button type="primary" onClick={addApplication}>
+      <Button buttonType="primary" onClick={addApplication}>
         Add new application
       </Button>
     </div>
