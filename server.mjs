@@ -2,6 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import crypto from "crypto";
 import dotenv from "dotenv";
+import path from "path";
 dotenv.config();
 
 const app = express();
