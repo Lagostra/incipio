@@ -4,6 +4,10 @@ import { useEditConfiguration } from "../hooks/useEditConfiguration";
 import { useUserRepositories } from "../hooks/useUserRepositories";
 import { useWorkflows } from "../hooks/useWorkflows";
 import { IRepository } from "../types";
+import { Button } from "./_base/Button";
+import { Input } from "./_base/Input";
+import { Label } from "./_base/Label";
+import { Select } from "./_base/Select";
 
 export const NewApplication = () => {
   const [config, setConfig] = useEditConfiguration();
@@ -40,7 +44,9 @@ export const NewApplication = () => {
   return (
     <div css={wrapperStyle}>
       <h2>New application</h2>
-      <select
+
+      <Label>Repository</Label>
+      <Select
         onChange={(e) => setSelectedRepository(e.target.value)}
         value={selectedRepository}
       >
@@ -52,16 +58,24 @@ export const NewApplication = () => {
             {repository.name}
           </option>
         ))}
-      </select>
-      <select>
+      </Select>
+
+      <Label>Deploy workflow</Label>
+      <Select>
         <option value="">--- Select workflow ---</option>
         {workflows.map((workflow, index) => (
           <option key={workflow.name} value={workflow.name}>
             {workflow.name}
           </option>
         ))}
-      </select>
-      <button onClick={addApplication}>Add new application</button>
+      </Select>
+
+      <Label>Version prefix</Label>
+      <Input type="text" />
+
+      <Button type="primary" onClick={addApplication}>
+        Add new application
+      </Button>
     </div>
   );
 };
