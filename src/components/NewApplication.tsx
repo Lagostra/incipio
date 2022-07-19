@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import { useEditConfiguration } from "../hooks/useEditConfiguration";
 import { useUserRepositories } from "../hooks/useUserRepositories";
+import { useWorkflows } from "../hooks/useWorkflows";
 import { IRepository } from "../types";
 
 export const NewApplication = () => {
@@ -11,6 +12,7 @@ export const NewApplication = () => {
   const repository = repositories.find(
     (r) => r.fullName === selectedRepository
   );
+  const workflows = useWorkflows(repository);
 
   const unusedRepositories = repositories.filter(
     (r) =>
@@ -48,6 +50,14 @@ export const NewApplication = () => {
         {unusedRepositories.map((repository, index) => (
           <option key={repository.fullName} value={repository.fullName}>
             {repository.name}
+          </option>
+        ))}
+      </select>
+      <select>
+        <option value="">--- Select workflow ---</option>
+        {workflows.map((workflow, index) => (
+          <option key={workflow.name} value={workflow.name}>
+            {workflow.name}
           </option>
         ))}
       </select>

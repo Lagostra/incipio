@@ -4,3 +4,7 @@ export interface IRepository {
   fullName: string;
   url: string;
 }
+
+export interface IWorkflow {
+  name: string;
+}
