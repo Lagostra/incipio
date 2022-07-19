@@ -4,10 +4,10 @@
   "homepage": "https://lagostra.github.io/incipio",
   "version": "0.0.0",
   "scripts": {
-    "start": "concurrently 'npm:server' 'npm:frontend'",
+    "start": "node server.mjs",
+    "dev": "concurrently 'npm:server' 'npm:frontend'",
     "server": "node server.mjs",
     "frontend": "vite",
-    "dev": "vite",
     "build": "tsc && vite build",
     "build:prod": "tsc && vite build --base=/incipio",
     "preview": "vite preview"
