@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getEnvironments } from "../clients/environmentClient";
 import { useEditConfiguration } from "../hooks/useEditConfiguration";
 import { useUserRepositories } from "../hooks/useUserRepositories";
 import { useWorkflows } from "../hooks/useWorkflows";
@@ -10,23 +12,39 @@ import { Label } from "./_base/Label";
 import { Select } from "./_base/Select";
 
 export const NewApplication = () => {
+  const navigate = useNavigate();
   const [config, setConfig] = useEditConfiguration();
   const repositories = useUserRepositories();
+
   const [selectedRepository, setSelectedRepository] = useState("");
   const repository = repositories.find(
     (r) => r.fullName === selectedRepository
   );
+
   const workflows = useWorkflows(repository);
   const [selectedWorkflow, setSelectedWorkflow] = useState("");
   const workflow = workflows.find((w) => w.name === selectedWorkflow);
   const [versionPrefix, setVersionPrefix] = useState("");
+  const [newEnvironment, setNewEnvironment] = useState("");
+  const [environments, setEnvironments] = useState<string[]>([]);
 
   const unusedRepositories = repositories.filter(
     (r) =>
       !config.applications.some((a) => a.repository.fullName === r.fullName)
   );
 
-  const addApplication = () => {
+  // useEffect(() => {
+  //   if (repository) {
+  //     getEnvironments(repository).then((environments) => {
+  //       console.log(environments);
+  //       if (environments.length) {
+  //         setEnvironments(environments);
+  //       }
+  //     });
+  //   }
+  // }, [repository]);
+
+  const save = () => {
     if (!repository || !workflow) return;
     setConfig({
       ...config,
@@ -38,10 +56,20 @@ export const NewApplication = () => {
           repository: { ...repository },
           deployWorkflow: { name: workflow?.name, path: workflow?.path },
           versionPrefix: versionPrefix,
+          environments,
         },
       ],
     });
-    setSelectedRepository("");
+    navigate("/");
+  };
+
+  const handleEnvironmentKeyPress = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      setEnvironments([...environments, newEnvironment]);
+      setNewEnvironment("");
+    }
   };
 
   const wrapperStyle = css`
@@ -89,7 +117,20 @@ export const NewApplication = () => {
         onChange={(e) => setVersionPrefix(e.target.value)}
       />
 
-      <Button buttonType="primary" onClick={addApplication}>
+      <Label>Environments</Label>
+      <Input
+        type="text"
+        value={newEnvironment}
+        onChange={(e) => setNewEnvironment(e.target.value)}
+        onKeyDown={handleEnvironmentKeyPress}
+      />
+      <ul>
+        {environments.map((environment) => (
+          <li>{environment}</li>
+        ))}
+      </ul>
+
+      <Button buttonType="primary" onClick={save}>
         Lagre
       </Button>
     </div>

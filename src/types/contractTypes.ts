@@ -22,3 +22,20 @@ export interface IWorkflowDto {
   path: string;
   state: string;
 }
+
+export interface IReleaseDto {
+  id: number;
+  html_url: string;
+  tag_name: string;
+  name: string;
+}
+
+export interface IEnvironmentResponse {
+  total_count: number;
+  environments: IEnvironmentDto[];
+}
+
+export interface IEnvironmentDto {
+  id: number;
+  name: string;
+}

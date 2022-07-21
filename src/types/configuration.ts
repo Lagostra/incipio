@@ -1,3 +1,5 @@
+import { IRepository } from ".";
+
 export interface IConfiguration {
   applications: IApplication[];
 }
@@ -8,12 +10,7 @@ export interface IApplication {
   repository: IRepository;
   deployWorkflow: IWorkflow;
   versionPrefix?: string;
-}
-
-export interface IRepository {
-  name: string;
-  owner: string;
-  fullName: string;
+  environments: string[];
 }
 
 export interface IWorkflow {

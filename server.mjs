@@ -17,7 +17,7 @@ const config = {
     process.env.REDIRECT_URI || "http://localhost:3000/auth/callback",
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  scope: process.env.SCOPE || "user repo",
+  scope: process.env.SCOPE || "user repo actions:read",
   port: process.env.PORT || 3001,
 };
 

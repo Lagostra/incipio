@@ -1,3 +1,5 @@
+import { css } from "@emotion/react";
+import { ApplicationDeployState } from "../components/ApplicationDeployState";
 import { NewApplication } from "../components/NewApplication";
 import { ButtonLink } from "../components/_base/ButtonLink";
 import { useConfiguration } from "../hooks/useConfiguration";
@@ -10,11 +12,18 @@ export const ApplicationOverviewView = () => {
       <ButtonLink buttonType="primary" href="/new-application">
         Ny applikasjon
       </ButtonLink>
-      <ul>
+      <div css={appListStyle}>
         {config.applications.map((app) => (
-          <li key={app.name}>{app.name}</li>
+          <ApplicationDeployState application={app} />
         ))}
-      </ul>
+      </div>
     </>
   );
 };
+
+const appListStyle = css`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+`;
