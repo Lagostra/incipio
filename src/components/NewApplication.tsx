@@ -17,6 +17,9 @@ export const NewApplication = () => {
     (r) => r.fullName === selectedRepository
   );
   const workflows = useWorkflows(repository);
+  const [selectedWorkflow, setSelectedWorkflow] = useState("");
+  const workflow = workflows.find((w) => w.name === selectedWorkflow);
+  const [versionPrefix, setVersionPrefix] = useState("");
 
   const unusedRepositories = repositories.filter(
     (r) =>
@@ -24,12 +27,18 @@ export const NewApplication = () => {
   );
 
   const addApplication = () => {
-    if (!repository) return;
+    if (!repository || !workflow) return;
     setConfig({
       ...config,
       applications: [
         ...config.applications,
-        { name: repository.name, url: "", repository: { ...repository } },
+        {
+          name: repository.name,
+          url: "",
+          repository: { ...repository },
+          deployWorkflow: { name: workflow?.name, path: workflow?.path },
+          versionPrefix: versionPrefix,
+        },
       ],
     });
     setSelectedRepository("");
@@ -61,7 +70,10 @@ export const NewApplication = () => {
       </Select>
 
       <Label>Deploy workflow</Label>
-      <Select>
+      <Select
+        value={selectedWorkflow}
+        onChange={(e) => setSelectedWorkflow(e.target.value)}
+      >
         <option value="">--- Select workflow ---</option>
         {workflows.map((workflow, index) => (
           <option key={workflow.name} value={workflow.name}>
@@ -71,10 +83,14 @@ export const NewApplication = () => {
       </Select>
 
       <Label>Version prefix</Label>
-      <Input type="text" />
+      <Input
+        type="text"
+        value={versionPrefix}
+        onChange={(e) => setVersionPrefix(e.target.value)}
+      />
 
       <Button buttonType="primary" onClick={addApplication}>
-        Add new application
+        Lagre
       </Button>
     </div>
   );

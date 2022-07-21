@@ -7,4 +7,5 @@ export interface IRepository {
 
 export interface IWorkflow {
   name: string;
+  path: string;
 }

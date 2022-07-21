@@ -40,4 +40,5 @@ export const getWorkflows = async (
 
 const mapWorkflow = (workflow: IWorkflowDto): IWorkflow => ({
   name: workflow.name,
+  path: workflow.path,
 });

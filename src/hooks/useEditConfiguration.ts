@@ -9,7 +9,6 @@ export const useEditConfiguration = (): [
   const [config, setConfigInternal] = useContext(ConfigurationEditContext);
 
   const setConfig = (config: IConfiguration) => {
-    console.log("Beep", config);
     localStorage.setItem("incipio.configuration", JSON.stringify(config));
     setConfigInternal(config);
   };
