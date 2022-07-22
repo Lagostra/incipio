@@ -13,5 +13,8 @@ export interface IWorkflow {
 export interface IRelease {
   name: string;
   tagName: string;
+  commitHash: string;
   url: string;
 }
+
+export interface IDeploy {}
