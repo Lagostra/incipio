@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { IRelease, IRepository } from "../types";
+import { IDeployment, IRelease, IRepository } from "../types";
 
 export const useReleases = (
   repository: IRepository,
@@ -53,6 +53,19 @@ export const useReleases = (
           tagName: ref.name,
           commitHash: ref.target.oid,
           url: `https://github.com/${repository.owner}/${repository.name}/releases/tag/${ref.name}`,
+          deployments: ref.target.deployments.nodes
+            .map(
+              (deployment: any) =>
+                ({
+                  environment: deployment.environment,
+                  state: deployment.state,
+                  lastUpdate: new Date(deployment.latestStatus.createdAt),
+                } as IDeployment)
+            )
+            .sort(
+              (a: IDeployment, b: IDeployment) =>
+                b.lastUpdate.getTime() - a.lastUpdate.getTime()
+            ),
         } as IRelease)
     ) ?? [];
 

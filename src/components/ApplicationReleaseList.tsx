@@ -5,10 +5,11 @@ import { IApplication } from "../types/configuration";
 interface IProps {
   application: IApplication;
 }
-export const ApplicationDeployState = ({ application }: IProps) => {
+export const ApplicationReleaseList = ({ application }: IProps) => {
   const releases = useReleases(
     application.repository,
-    application.versionPrefix ?? ""
+    application.versionPrefix ?? "",
+    15
   );
 
   return (
@@ -32,7 +33,10 @@ export const ApplicationDeployState = ({ application }: IProps) => {
                 </a>
               </td>
               {application.environments.map((env) => (
-                <td key={env}></td>
+                <td key={env}>
+                  {release.deployments.find((d) => d.environment === env)
+                    ?.state ?? ""}
+                </td>
               ))}
             </tr>
           ))}

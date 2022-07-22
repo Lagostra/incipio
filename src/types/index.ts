@@ -15,6 +15,11 @@ export interface IRelease {
   tagName: string;
   commitHash: string;
   url: string;
+  deployments: IDeployment[];
 }
 
-export interface IDeploy {}
+export interface IDeployment {
+  environment: string;
+  state: string;
+  lastUpdate: Date;
+}

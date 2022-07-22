@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { ApplicationDeployState } from "../components/ApplicationDeployState";
+import { ApplicationReleaseList } from "../components/ApplicationReleaseList";
 import { NewApplication } from "../components/NewApplication";
 import { ButtonLink } from "../components/_base/ButtonLink";
 import { useConfiguration } from "../hooks/useConfiguration";
@@ -14,7 +14,7 @@ export const ApplicationOverviewView = () => {
       </ButtonLink>
       <div css={appListStyle}>
         {config.applications.map((app) => (
-          <ApplicationDeployState application={app} key={app.name} />
+          <ApplicationReleaseList application={app} key={app.name} />
         ))}
       </div>
     </>
