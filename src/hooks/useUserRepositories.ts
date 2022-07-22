@@ -1,6 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
-import { getUserRepositories } from "../clients/repositoryClient";
 import { IRepository } from "../types";
 
 export const useUserRepositories = (): IRepository[] => {
