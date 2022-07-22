@@ -57,6 +57,7 @@ export const useReleases = (
           deployments: ref.target.deployments.nodes
             .map((deployment: any) => {
               return {
+                id: deployment.id,
                 environment: deployment.environment,
                 state: deployment.state,
                 lastUpdate: new Date(deployment.latestStatus.createdAt),
@@ -71,8 +72,6 @@ export const useReleases = (
             ),
         } as IRelease)
     ) ?? [];
-
-  console.log(releases);
 
   return releases;
 };

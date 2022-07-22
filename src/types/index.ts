@@ -18,7 +18,12 @@ export interface IRelease {
   deployments: IDeployment[];
 }
 
+export interface IReleaseDetails extends IRelease {
+  description: string;
+}
+
 export interface IDeployment {
+  id: string;
   environment: string;
   state: string;
   lastUpdate: Date;

@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { Link } from "react-router-dom";
 import { useReleases } from "../hooks/useReleases";
 import { IApplication } from "../types/configuration";
 import { Block } from "./_base/Block";
@@ -33,12 +34,24 @@ export const ApplicationReleaseList = ({ application }: IProps) => {
                   {release.tagName}
                 </a>
               </td>
-              {application.environments.map((env) => (
-                <td key={env}>
-                  {release.deployments.find((d) => d.environment === env)
-                    ?.state ?? ""}
-                </td>
-              ))}
+              {application.environments.map((env) => {
+                const deployment = release.deployments.find(
+                  (d) => d.environment === env
+                );
+                return (
+                  <td key={env}>
+                    {deployment ? (
+                      <Link
+                        to={`/applications/${application.name}/releases/${release.tagName}/${env}`}
+                      >
+                        {deployment.state}
+                      </Link>
+                    ) : (
+                      <></>
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
