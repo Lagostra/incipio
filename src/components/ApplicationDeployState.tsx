@@ -30,17 +30,31 @@ export const ApplicationDeployState = ({ application }: IProps) => {
         </thead>
         <tbody>
           <tr>
-            {application.environments.map((env) => (
-              <td key={env}>
-                {
-                  releases.find((r) =>
-                    r.deployments.some(
-                      (d) => d.environment === env && d.state === "ACTIVE"
-                    )
-                  )?.tagName
-                }
-              </td>
-            ))}
+            {application.environments.map((env) => {
+              const release = releases.find((r) =>
+                r.deployments.some(
+                  (d) => d.environment === env && d.state === "ACTIVE"
+                )
+              );
+              const deployment = release?.deployments.find(
+                (d) => d.environment === env && d.state === "ACTIVE"
+              );
+              return (
+                <td key={env}>
+                  {deployment?.runId ? (
+                    <a
+                      href={`https://github.com/${application.repository.owner}/${application.repository.name}/actions/runs/${deployment.runId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {release?.tagName}
+                    </a>
+                  ) : (
+                    <>{release?.tagName}</>
+                  )}
+                </td>
+              );
+            })}
           </tr>
         </tbody>
       </Table>

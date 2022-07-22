@@ -22,4 +22,5 @@ export interface IDeployment {
   environment: string;
   state: string;
   lastUpdate: Date;
+  runId?: string;
 }

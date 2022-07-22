@@ -35,6 +35,7 @@ export const useReleases = (
                     latestStatus {
                       createdAt
                     }
+                    payload
                   }
                 }
               }
@@ -54,14 +55,16 @@ export const useReleases = (
           commitHash: ref.target.oid,
           url: `https://github.com/${repository.owner}/${repository.name}/releases/tag/${ref.name}`,
           deployments: ref.target.deployments.nodes
-            .map(
-              (deployment: any) =>
-                ({
-                  environment: deployment.environment,
-                  state: deployment.state,
-                  lastUpdate: new Date(deployment.latestStatus.createdAt),
-                } as IDeployment)
-            )
+            .map((deployment: any) => {
+              return {
+                environment: deployment.environment,
+                state: deployment.state,
+                lastUpdate: new Date(deployment.latestStatus.createdAt),
+                runId: deployment.payload
+                  ? JSON.parse(JSON.parse(deployment.payload)).run_id
+                  : undefined,
+              } as IDeployment;
+            })
             .sort(
               (a: IDeployment, b: IDeployment) =>
                 b.lastUpdate.getTime() - a.lastUpdate.getTime()
