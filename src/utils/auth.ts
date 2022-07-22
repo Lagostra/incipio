@@ -1,7 +1,8 @@
 export const REDIRECT_PATH = "/auth/callback";
+const storage = sessionStorage;
 
 export const getToken = () => {
-  return localStorage.getItem("access_token");
+  return storage.getItem("access_token");
 };
 
 export const signIn = () => {
@@ -9,12 +10,12 @@ export const signIn = () => {
 };
 
 export const isSignedIn = () => {
-  const access_token = localStorage.getItem("access_token");
+  const access_token = storage.getItem("access_token");
   if (!access_token) {
     return false;
   }
 
-  // const expiration_string = localStorage.getItem("token_expiration");
+  // const expiration_string = storage.getItem("token_expiration");
 
   // if (
   //   !expiration_string ||
@@ -39,17 +40,17 @@ export const handle_callback = async () => {
   );
 
   const data = await response.json();
-  localStorage.setItem("access_token", data.accessToken);
-  // localStorage.setItem("token_expiration", data.expires_at.toString());
-  // localStorage.setItem("refresh_token", data.refresh_token);
+  storage.setItem("access_token", data.accessToken);
+  // storage.setItem("token_expiration", data.expires_at.toString());
+  // storage.setItem("refresh_token", data.refresh_token);
 
   window.location.replace(window.location.origin);
 };
 
 export const signOut = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("token_expiration");
-  localStorage.removeItem("refresh_token");
+  storage.removeItem("access_token");
+  storage.removeItem("token_expiration");
+  storage.removeItem("refresh_token");
 
   window.location.replace(window.location.origin);
 };
