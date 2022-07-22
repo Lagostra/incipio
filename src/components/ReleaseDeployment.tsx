@@ -1,6 +1,9 @@
 import { css } from "@emotion/react";
+import { useEffect, useState } from "react";
+import { getWorkflowRunLog } from "../clients/workflowClient";
 import { IDeployment } from "../types";
 import { IApplication } from "../types/configuration";
+import { WorkflowRunLog } from "./WorkflowRunLog";
 
 interface IProps {
   application: IApplication;
@@ -16,6 +19,18 @@ export const ReleaseDeployment = ({
   deployment,
   onClick,
 }: IProps) => {
+  const [logs, setLogs] = useState<Blob | undefined>();
+  const [showLog, setShowLog] = useState(false);
+  useEffect(() => {
+    if (showLog && !logs && deployment.runId) {
+      getWorkflowRunLog(application.repository, deployment.runId).then(
+        (result) => {
+          setLogs(result);
+        }
+      );
+    }
+  }, [showLog]);
+
   return (
     <div key={deployment.id}>
       <h3 onClick={onClick} css={headerStyle}>
@@ -35,6 +50,15 @@ export const ReleaseDeployment = ({
             </a>
           )}
           <p>{deployment.state}</p>
+          <span css={logHeaderStyle} onClick={() => setShowLog(!showLog)}>
+            Logg {showLog ? "v" : <>&gt;</>}
+          </span>
+          {showLog && (
+            <div>
+              {!logs && <>Laster...</>}
+              {!!logs && <WorkflowRunLog zipBlob={logs} />}
+            </div>
+          )}
         </>
       )}
     </div>
@@ -42,5 +66,10 @@ export const ReleaseDeployment = ({
 };
 
 const headerStyle = css`
+  cursor: pointer;
+`;
+
+const logHeaderStyle = css`
+  font-weight: bold;
   cursor: pointer;
 `;
