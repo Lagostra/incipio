@@ -14,7 +14,7 @@ export const ApplicationOverviewView = () => {
       </ButtonLink>
       <div css={appListStyle}>
         {config.applications.map((app) => (
-          <ApplicationDeployState application={app} />
+          <ApplicationDeployState application={app} key={app.name} />
         ))}
       </div>
     </>

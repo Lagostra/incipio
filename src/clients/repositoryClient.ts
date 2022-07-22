@@ -1,4 +1,6 @@
+import { gql } from "@apollo/client";
 import { GITHUB_URL } from "../constants";
+import { graphqlClient } from "../graphql/client";
 import { IRepository, IWorkflow } from "../types";
 import {
   IRepositoryDto,

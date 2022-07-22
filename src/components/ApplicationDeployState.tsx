@@ -19,20 +19,20 @@ export const ApplicationDeployState = ({ application }: IProps) => {
           <tr>
             <td></td>
             {application.environments.map((env) => (
-              <td>{env}</td>
+              <td key={env}>{env}</td>
             ))}
           </tr>
         </thead>
         <tbody>
           {releases.map((release) => (
-            <tr>
+            <tr key={release.tagName}>
               <td>
                 <a href={release.url} target="_blank" rel="noopener noreferer">
                   {release.tagName}
                 </a>
               </td>
               {application.environments.map((env) => (
-                <td></td>
+                <td key={env}></td>
               ))}
             </tr>
           ))}
