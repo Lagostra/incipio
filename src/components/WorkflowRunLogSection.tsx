@@ -35,4 +35,5 @@ const logStyle = css`
   white-space: pre-wrap;
   word-break: break-all;
   padding-bottom: 15px;
+  font-family: monospace;
 `;
