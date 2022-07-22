@@ -20,5 +20,11 @@ export const ReleaseDetailsView = () => {
     environment
   );
 
-  return <ReleaseDetails release={release} environment={environment} />;
+  return (
+    <ReleaseDetails
+      application={application}
+      release={release}
+      environment={environment}
+    />
+  );
 };
