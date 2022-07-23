@@ -22,7 +22,7 @@ export const ReleaseDetails = ({
 
   return (
     <div>
-      <Link to="/">&lt;-- Tilbake</Link>
+      <Link to={`/applications/${application.name}`}>&lt;-- Tilbake</Link>
       <h2>{release.name}</h2>
       <a href={release.url} target="_blank" rel="noopener noreferrer">
         Vis i GitHub
