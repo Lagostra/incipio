@@ -1,8 +1,10 @@
-import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
+import { triggerDeployment } from "../clients/workflowClient";
 import { useReleases } from "../hooks/useReleases";
+import { IRelease } from "../types";
 import { IApplication } from "../types/configuration";
 import { Block } from "./_base/Block";
+import { Button } from "./_base/Button";
 import { Table } from "./_base/Table";
 
 interface IProps {
@@ -14,6 +16,10 @@ export const ApplicationReleaseList = ({ application }: IProps) => {
     application.versionPrefix ?? "",
     15
   );
+
+  const deploy = async (release: IRelease, environment: string) => {
+    await triggerDeployment(application, release.tagName, environment);
+  };
 
   return (
     <Block>
@@ -47,7 +53,12 @@ export const ApplicationReleaseList = ({ application }: IProps) => {
                         {deployment.state}
                       </Link>
                     ) : (
-                      <></>
+                      <Button
+                        buttonType="primary"
+                        onClick={() => deploy(release, env)}
+                      >
+                        Deploy
+                      </Button>
                     )}
                   </td>
                 );

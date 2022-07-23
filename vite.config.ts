@@ -11,6 +11,11 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      "node-fetch": "isomorphic-fetch",
+    },
+  },
   esbuild: {
     logOverride: { "this-is-undefined-in-esm": "silent" },
   },
